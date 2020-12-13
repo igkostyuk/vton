@@ -1,7 +1,9 @@
 package vton_test
 
 import (
+	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/igkostyuk/vton"
 )
@@ -45,6 +47,29 @@ func TestWordsWithUpperCases(t *testing.T) {
 			t.Errorf("encode got %s want %s", gotEncoded, test.encoded)
 		}
 	}
+}
+
+func TestRandWords(t *testing.T) {
+	e := vton.NewEncoding()
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < 100; i++ {
+		want := RandStringRunes(25)
+		got := e.Decode(e.Encode(want))
+		if got != want {
+			t.Errorf("got %s want %s", got, want)
+		}
+	}
+}
+
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
+
+func RandStringRunes(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letterRunes[rand.Intn(len(letterRunes))] // #nosec
+	}
+
+	return string(b)
 }
 
 func BenchmarkEncoding(b *testing.B) {
