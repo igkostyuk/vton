@@ -2,10 +2,18 @@ package vton_test
 
 import (
 	"math/rand"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/igkostyuk/vton"
+)
+
+var (
+	vowelsCode = "aeiou"
+	numberCode = "12345"
+
+	letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
 )
 
 func TestWords(t *testing.T) {
@@ -26,6 +34,12 @@ func TestWords(t *testing.T) {
 		}
 		if gotEncoded != test.encoded {
 			t.Errorf("encode got %s want %s", gotEncoded, test.encoded)
+		}
+		if containsNumbeCode(gotDecoded) {
+			t.Errorf("%s contains number code", gotDecoded)
+		}
+		if containsVowelsCode(gotEncoded) {
+			t.Errorf("%s contains vowels code", gotEncoded)
 		}
 	}
 }
@@ -61,8 +75,6 @@ func TestRandWords(t *testing.T) {
 	}
 }
 
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
-
 func RandStringRunes(n int) string {
 	b := make([]rune, n)
 	for i := range b {
@@ -70,6 +82,14 @@ func RandStringRunes(n int) string {
 	}
 
 	return string(b)
+}
+
+func containsVowelsCode(str string) bool {
+	return strings.ContainsAny(str, vowelsCode)
+}
+
+func containsNumbeCode(str string) bool {
+	return strings.ContainsAny(str, numberCode)
 }
 
 func BenchmarkEncoding(b *testing.B) {
