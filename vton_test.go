@@ -1,6 +1,9 @@
-package vton
+package vton_test
 
-import "testing"
+import (
+	"goo/vton"
+	"testing"
+)
 
 func TestWords(t *testing.T) {
 	tt := []struct {
@@ -11,9 +14,7 @@ func TestWords(t *testing.T) {
 		{decoded: "o, hi there", encoded: "4, h3 th2r2"},
 		{decoded: "are you there?", encoded: "1r2 y45 th2r2?"},
 	}
-
-	e := NewEncoding()
-
+	e := vton.NewEncoding()
 	for _, test := range tt {
 		gotDecoded := e.Decode(test.encoded)
 		gotEncoded := e.Encode(test.decoded)
@@ -23,10 +24,9 @@ func TestWords(t *testing.T) {
 		if gotEncoded != test.encoded {
 			t.Errorf("encode got %s want %s", gotEncoded, test.encoded)
 		}
-
 	}
-
 }
+
 func TestWordsWithUpperCases(t *testing.T) {
 	tt := []struct {
 		decoded string
@@ -37,15 +37,11 @@ func TestWordsWithUpperCases(t *testing.T) {
 		{decoded: "Are you OK?", encoded: "1r2 y45 4K?"},
 		{decoded: "Upper case", encoded: "5pp2r c1s2"},
 	}
-
-	e := NewEncoding()
-
+	e := vton.NewEncoding()
 	for _, test := range tt {
 		gotEncoded := e.Encode(test.decoded)
 		if gotEncoded != test.encoded {
 			t.Errorf("encode got %s want %s", gotEncoded, test.encoded)
 		}
-
 	}
-
 }
