@@ -1,8 +1,9 @@
 package vton_test
 
 import (
-	"goo/vton"
 	"testing"
+
+	"github.com/igkostyuk/vton"
 )
 
 func TestWords(t *testing.T) {
