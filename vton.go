@@ -6,28 +6,28 @@ import (
 )
 
 type Encoding struct {
-	latters map[rune]rune
+	letters map[rune]rune
 	numbers map[rune]rune
 }
 
 func NewEncoding() Encoding {
 	vtnencoding := []struct {
-		latter rune
+		letter rune
 		number rune
 	}{
-		{latter: 'a', number: '1'},
-		{latter: 'e', number: '2'},
-		{latter: 'i', number: '3'},
-		{latter: 'o', number: '4'},
-		{latter: 'u', number: '5'},
+		{letter: 'a', number: '1'},
+		{letter: 'e', number: '2'},
+		{letter: 'i', number: '3'},
+		{letter: 'o', number: '4'},
+		{letter: 'u', number: '5'},
 	}
 	var e Encoding
-	e.latters = make(map[rune]rune, len(vtnencoding))
+	e.letters = make(map[rune]rune, len(vtnencoding))
 	e.numbers = make(map[rune]rune, len(vtnencoding))
 	for _, c := range vtnencoding {
-		e.numbers[c.number] = c.latter
-		e.latters[c.latter] = c.number
-		e.latters[unicode.ToUpper(c.latter)] = c.number
+		e.numbers[c.number] = c.letter
+		e.letters[c.letter] = c.number
+		e.letters[unicode.ToUpper(c.letter)] = c.number
 	}
 
 	return e
@@ -38,7 +38,7 @@ func (e Encoding) Decode(str string) string {
 }
 
 func (e Encoding) Encode(str string) string {
-	return strings.Map(findRune(e.latters), str)
+	return strings.Map(findRune(e.letters), str)
 }
 
 func findRune(m map[rune]rune) func(rune) rune {
