@@ -46,3 +46,17 @@ func TestWordsWithUpperCases(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkEncoding(b *testing.B) {
+	e := vton.NewEncoding()
+	for n := 0; n < b.N; n++ {
+		e.Encode("hello")
+	}
+}
+
+func BenchmarkDecoding(b *testing.B) {
+	e := vton.NewEncoding()
+	for n := 0; n < b.N; n++ {
+		e.Decode("h2ll4")
+	}
+}
