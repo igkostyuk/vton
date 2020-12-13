@@ -10,6 +10,7 @@ type Encoding struct {
 	numbers map[rune]rune
 }
 
+// NewEncoding returns a new Encoding defined by inner table.
 func NewEncoding() Encoding {
 	vtnencoding := []struct {
 		letter rune
@@ -33,10 +34,12 @@ func NewEncoding() Encoding {
 	return e
 }
 
+// Decode decodes string using the encoding numbers.
 func (e Encoding) Decode(str string) string {
 	return strings.Map(findRune(e.numbers), str)
 }
 
+// Encoding encodes string using the encoding letters.
 func (e Encoding) Encode(str string) string {
 	return strings.Map(findRune(e.letters), str)
 }
